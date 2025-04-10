@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { Canvas } from '@react-three/fiber';
 import { KeyboardControls } from '@react-three/drei';
+import Interface from './components/Interface.jsx';
 import './style.css';
 
 import Experience from './Experience.jsx';
@@ -29,7 +30,7 @@ root.render(
             >
                 <Experience />
              </Canvas>
-
+            <Interface />
         </KeyboardControls>
    
 )
