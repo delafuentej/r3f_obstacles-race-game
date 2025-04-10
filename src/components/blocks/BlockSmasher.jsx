@@ -6,7 +6,7 @@ import { materialMap } from '../../materials/materials';
 
 const BlockSmasher = ({ position = [0, 0, 0] }) => {
   const smasherRef = useRef();
-  const [speed] = useState(() => Math.random() * 1 + 1); // Velocidad de bajada/subida
+  const [speed] = useState(()=> (Math.random() + 0.2) * (Math.random() < 0.5 ? -1: 1));
   const [offset] = useState(() => Math.random() * Math.PI * 2);
 
   useFrame((state) => {

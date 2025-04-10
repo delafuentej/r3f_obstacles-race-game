@@ -1,4 +1,3 @@
-import * as THREE from "three";
 import { RigidBody } from "@react-three/rapier";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
@@ -8,26 +7,30 @@ import { materialMap } from "../../materials/materials";
 const BlockAxe = ({ position }) => {
   const obstacleRef = useRef(); // Usamos un ref para el mesh
   
-  const [timeOffset] = useState(()=> Math.random() * Math.PI * 2);
+  // Asignamos un offset aleatorio para que el movimiento sea diferente para cada obstáculo
+  const [offset] = useState(() => Math.random() * Math.PI * 5);
   
+  // Velocidad aleatoria y dirección aleatoria (izquierda/derecha)
+  const [speed] = useState(() => (Math.random() * 2 + 2) * (Math.random() < 0.5 ? -1 : 1));
+  
+  // Amplitud del movimiento para cada obstáculo
+  const [amplitude] = useState(() => 0.3 + Math.random() * 0.7); // Amplitud entre 0.3 y 1.0
 
   useFrame((state) => {
     if (!obstacleRef.current) return; 
     const time = state.clock.getElapsedTime();
     
-    const x = Math.sin(time + timeOffset) * 1.25; // Movimiento en Y: arriba y abajo
+    // Movimiento zigzag o de lado
+    const x = Math.sin(time * speed + offset) * amplitude;
 
     // Aplicamos el movimiento a la posición del mesh
-   
     obstacleRef.current.position.x = x;
     obstacleRef.current.position.y = 0.75;
-   
-     
   });
 
   return (
     <group position={position}>
-      {/* Floor */}
+      {/* Piso */}
       <mesh
         geometry={boxGeometry}
         material={materialMap.floor2}
@@ -36,7 +39,7 @@ const BlockAxe = ({ position }) => {
         receiveShadow
       />
 
-      {/* Obstacle Spinner */}
+      {/* Obstáculo */}
       <RigidBody
         type="kinematicPosition"
         position={[0, 0.3, 0]}
@@ -47,7 +50,7 @@ const BlockAxe = ({ position }) => {
           ref={obstacleRef} 
           geometry={boxGeometry}
           material={materialMap.obstacle}
-          scale={[1.75, 1.75, 0.3]}
+          scale={[2, 1.5, 0.3]}
           castShadow
           receiveShadow
         />

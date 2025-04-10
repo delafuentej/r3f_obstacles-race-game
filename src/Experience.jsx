@@ -1,9 +1,10 @@
 import { Physics } from '@react-three/rapier';
 import { OrbitControls } from '@react-three/drei';
-import { Lights, Level } from './components';
+import { Lights, Level, Player } from './components';
 
-export default function Experience()
-{
+
+export default function Experience({ref}){
+   
     return <>
         <OrbitControls makeDefault />
 
@@ -13,6 +14,7 @@ export default function Experience()
               //  count={10}
                // blocksTypes={[BlockSmasher, BlockSpinner, BlockLimbo]}
                 />
+            <Player />
         </Physics>
         
 
