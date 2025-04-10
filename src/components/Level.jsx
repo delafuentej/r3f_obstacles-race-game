@@ -10,6 +10,7 @@ import {
     BlockStart, 
     BlockZigZag 
 } from "./blocks";
+import Bounds from "./Bounds";
 
 const Level = ({
   count = 10,
@@ -44,6 +45,8 @@ const Level = ({
         {blocks.map((Block, index) => <Block key={index} position={[0, 0, - (index + 1) * 4]}/>)}
        
        <BlockEnd position={[0, 0, - (count +1) * 4]}/>
+
+       <Bounds length={count + 2}/>
     
     </>
   )
