@@ -8,7 +8,7 @@ export default function Experience({ref}){
     return <>
         <OrbitControls makeDefault />
 
-        <Physics debug>
+        <Physics>
             <Lights />
             <Level 
               //  count={10}
