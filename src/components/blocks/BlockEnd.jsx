@@ -1,4 +1,4 @@
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, Text } from '@react-three/drei';
 import { RigidBody } from '@react-three/rapier';
 import { boxGeometry } from '../../geometries/geometries';
 import { materialMap } from '../../materials/materials';
@@ -7,7 +7,10 @@ import { materialMap } from '../../materials/materials';
 
 const BlockEnd = ({position= [0, 0, 0]}) => {
 
+  const font = '/fonts/bebas-neue-v9-latin-regular.woff'
+
   const trophy = useGLTF('./models/trophy.glb');
+  const finish = useGLTF('./models/finish.glb');
 
   trophy.scene.castShadow = true;
 
@@ -26,7 +29,21 @@ const BlockEnd = ({position= [0, 0, 0]}) => {
 
   return (
     <group position={position}>
-        {/* Floor- Start */}
+      <Text
+        font={font}
+        scale={1}
+        position={[ 0, 2.25, 2.2]}
+        color='#ffff00'
+      >
+        FINISH
+      </Text>  
+         <primitive 
+            object={finish.scene.clone()}
+            scale={5}
+            position={[0,0,2]}
+          />
+
+        {/* floor end */}
          <mesh 
             geometry={boxGeometry} 
             material= {materialMap.floor1}

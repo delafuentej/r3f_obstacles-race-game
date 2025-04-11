@@ -10,7 +10,7 @@ export default function Experience({ref}){
    
     return <>
        
-
+        <color args={['lightblue']} attach='background' />
         <Physics>
             <Lights />
             <Level 

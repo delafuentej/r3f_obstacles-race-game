@@ -3,6 +3,8 @@ export {default as BlockConveyor} from './BlockConveyor';
 export {default as BlockEnd} from './BlockEnd';
 export {default as BlockLimbo} from './BlockLimbo';
 export {default as BlockMaze} from './BlockMaze';
+export {default as BlockPendulum} from './BlockPendulum';
+export {default as BlockRoller} from './BlockRoller';
 export {default as BlockSmasher} from './BlockSmasher';
 export {default as BlockSpinner} from './BlockSpinner';
 export {default as BlockStart} from './BlockStart';

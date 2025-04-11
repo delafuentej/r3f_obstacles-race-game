@@ -1,10 +1,14 @@
 import { useMemo } from "react";
+
 import { 
     BlockAxe, 
     BlockConveyor,
     BlockEnd, 
+
     BlockLimbo, 
     BlockMaze, 
+    BlockPendulum,
+    BlockRoller,
     BlockSmasher, 
     BlockSpinner, 
     BlockStart, 
@@ -17,8 +21,11 @@ const Level = ({
   blocksTypes = [
     BlockAxe, 
     BlockConveyor, 
+
     BlockLimbo, 
     BlockMaze, 
+    BlockPendulum,
+    BlockRoller,
     BlockSmasher, 
     BlockSpinner, 
     BlockZigZag 
