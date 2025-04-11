@@ -4,6 +4,7 @@ import { RigidBody, useRapier } from "@react-three/rapier";
 import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
 import { useRef, forwardRef, useEffect, useState } from "react";
+import { useGameStore } from '../store/useGame.store';
 
 
 
@@ -11,6 +12,11 @@ import { useRef, forwardRef, useEffect, useState } from "react";
 // - subscribeKeys: a function to subscribe to key changes (useful to know when the 'jump', etc. key has been pressed)
 // - getKeys: a function to get the current state of the keys (useful to know if the WASD KEYS are being pressed)
 const Player = forwardRef((props, ref) => {
+
+    const start = useGameStore((state) => state.start);
+    const restart = useGameStore((state) => state.restart);
+    const finish = useGameStore((state) => state.finish);
+    const blocksCount = useGameStore((state) => state.blocksCount);
   
     const bodyRef = useRef(null);
     const [subscribeKeys, getKeys] = useKeyboardControls();
@@ -31,19 +37,42 @@ const Player = forwardRef((props, ref) => {
 
        
         if(hit.timeOfImpact < 0.15) bodyRef.current.applyImpulse({x: 0, y: 0.5, z:0});
+    };
+
+    const reset = () => {
+       
+        bodyRef.current.setTranslation({x:0, y:1, z:0});
+        bodyRef.current.setLinvel({x:0, y:0, z:0});
+        bodyRef.current.setAngvel({x:0, y:0, z:0});
+
     }
 
     
 
     useEffect(()=> {
+
+       const unsubscribeReset = useGameStore.subscribe(
+            (state)=> state.phase,
+            (value)=> {
+                if(value === 'ready') reset()
+            },
+        )
+
         const unsubscribeJump = subscribeKeys(
             (state)=> state.jump,
             (value)=>{
                 if(value) jump();
-            },
+            });
+        const unsubscribeAny = subscribeKeys(
+            ()=> {
+                start();
+            }
         );
         return ()=> {
-            unsubscribeJump()
+            unsubscribeReset(),
+            unsubscribeJump(),
+            unsubscribeAny()
+           
         }
     },[]);
 
@@ -83,8 +112,6 @@ const Player = forwardRef((props, ref) => {
             break;
     }
 
-
-
         bodyRef.current.applyImpulse(impulse, true);
         bodyRef.current.applyTorqueImpulse(torque, true);
 
@@ -110,6 +137,12 @@ const Player = forwardRef((props, ref) => {
 
         state.camera.position.copy(smoothedCameraPosition);
         state.camera.lookAt(smoothedCameraTarget);
+
+        /**
+         * Phases
+         */
+        if(bodyPosition.z < - (blocksCount * 4 + 2)) finish();
+        if(bodyPosition.y < -4) restart();
     });
 
     return (

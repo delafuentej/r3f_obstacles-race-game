@@ -1,8 +1,12 @@
 import { Physics } from '@react-three/rapier';
 import { Lights, Level, Player } from './components';
+import { useGameStore } from './store/useGame.store';
 
 
 export default function Experience({ref}){
+
+    const blocksCount = useGameStore((state) => state.blocksCount);
+    const blocksSeed = useGameStore((state) => state.blocksSeed);
    
     return <>
        
@@ -10,7 +14,8 @@ export default function Experience({ref}){
         <Physics>
             <Lights />
             <Level 
-              //  count={10}
+                count={blocksCount}
+                seed={blocksSeed}
                // blocksTypes={[BlockSmasher, BlockSpinner, BlockLimbo]}
                 />
             <Player />

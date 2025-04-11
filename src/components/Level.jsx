@@ -22,7 +22,9 @@ const Level = ({
     BlockSmasher, 
     BlockSpinner, 
     BlockZigZag 
-  ]}) => {
+  ],
+  seed=0
+}) => {
 
       const blocks = useMemo(()=>{
         const blocks = [];
@@ -35,7 +37,7 @@ const Level = ({
 
         return blocks;
 
-      },[count, blocksTypes]);
+      },[count, blocksTypes, seed]);
 
 
   return (
